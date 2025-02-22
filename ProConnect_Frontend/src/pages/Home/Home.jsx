@@ -30,7 +30,7 @@ const Home = () => {
             <p>Safe and reliable payment processing for all projects</p>
           </div>
           <div className="feature-card">
-            <h3>Project Management</h3>
+            <h3>Project Management for it</h3>
             <p>Powerful tools to manage your projects effectively</p>
           </div>
         </div>
