@@ -9,6 +9,8 @@ import JobPosting from './components/JobPosting/JobPosting';
 import JobPostingForm from './components/JobPosting/JobPostingForm';
 import JobListing from './components/JobListing/JobListing';
 import RoleSelection from './components/RoleSelection/RoleSelection'
+import FreelancerDashboard from './components/FreelancerDashboard/FreelancerDashboard';
+import FreelancerOnboarding from './components/FreelancerOnboarding/FreelancerOnboarding';
 import './App.css';
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
             <Route path="/jobs" element={<JobListing />} />
             <Route path="/roleselection" element={<RoleSelection />} />
             <Route path="/JobPostingForm" element={<JobPostingForm />} />
+            <Route path="/freelancerdashboard" element={<FreelancerDashboard />} />
+            <Route path="/freelancer-onboarding" element={<FreelancerOnboarding />} />
 
           </Routes>
         </main>

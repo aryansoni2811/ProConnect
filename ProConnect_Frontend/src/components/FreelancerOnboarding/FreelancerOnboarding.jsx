@@ -26,12 +26,31 @@ const FreelancerOnboarding = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Store the profile data
-    localStorage.setItem('freelancerProfile', JSON.stringify(formData));
-    // Navigate to dashboard
-    navigate('/freelancer-dashboard');
+    try {
+      // Send data to backend
+      const response = await fetch('http://localhost:8080/api/freelancers/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to create profile');
+      }
+  
+      // Store the profile data locally
+      localStorage.setItem('freelancerProfile', JSON.stringify(formData));
+      
+      // Navigate to dashboard
+      navigate('/freelancerdashboard');
+    } catch (error) {
+      console.error('Error creating profile:', error);
+      // Handle error (you might want to show an error message to the user)
+    }
   };
 
   return (

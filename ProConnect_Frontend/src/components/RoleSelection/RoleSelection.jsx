@@ -10,7 +10,7 @@ const RoleSelection = () => {
   };
 
   const handleFreelancerSelection = () => {
-    navigate('/freelancer-dashboard');
+    navigate('/freelancerdashboard');
   };
 
   return (

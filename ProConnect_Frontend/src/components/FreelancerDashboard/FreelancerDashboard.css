@@ -1,0 +1,132 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: var(--color-secondary);
+  }
+
+  .dashboard-header {
+    margin-bottom: 2rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .location-info {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+  }
+
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .dashboard-grid {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  .card {
+    background: var(--color-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .card-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .info-item svg {
+    margin-right: 1rem;
+    color:var(--color-primary);
+  }
+
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .skill-tag {
+    background:var(--color-primary);
+    color: #1e40af;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+  }
+
+  .job-search-card {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary)100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .job-search-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .job-search-button {
+    background: var(--color-tertiary);
+    color: #2563eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .job-search-button:hover {
+    background: #f8fafc;
+  }
+
+  .portfolio-link {
+    display: flex;
+    align-items: center;
+    color: #3b82f6;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+  }
+
+  .portfolio-link:hover {
+    text-decoration: underline;
+  }
+
+  .portfolio-link svg {
+    margin-right: 0.5rem;
+  }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
