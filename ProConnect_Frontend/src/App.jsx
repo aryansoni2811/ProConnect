@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import SignUp from './pages/SignUp/SignUpForm';
 import JobPosting from './components/JobPosting/JobPosting';
+import JobPostingForm from './components/JobPosting/JobPostingForm';
 import JobListing from './components/JobListing/JobListing';
 import RoleSelection from './components/RoleSelection/RoleSelection'
 import './App.css';
@@ -23,7 +24,8 @@ function App() {
             <Route path="/post-job" element={<JobPosting />} />
             <Route path="/jobs" element={<JobListing />} />
             <Route path="/roleselection" element={<RoleSelection />} />
-           
+            <Route path="/JobPostingForm" element={<JobPostingForm />} />
+
           </Routes>
         </main>
         <Footer />

@@ -115,6 +115,7 @@ const JobPostingForm = ({ onSubmit }) => {
     };
 
     return (
+        <div className="clientForm">
         <div className="form-container">
             <h2>Project Request Form</h2>
             <form onSubmit={handleSubmit}>
@@ -149,6 +150,7 @@ const JobPostingForm = ({ onSubmit }) => {
                 <input type="text" name="location" placeholder="Location" onChange={handleChange} required />
                 <button type="submit">Submit</button>
             </form>
+        </div>
         </div>
     );
 };

@@ -37,7 +37,7 @@
 
 /*login*/
 .btn {
-  width: 150px;
+  width: 250px;
   height: 50px;
   border-radius: 5px;
   border: none;
@@ -47,7 +47,7 @@
   font-weight: 600;
   display: flex;
   align-items: center;
-  background: #040f16;
+  background: var(--color-tertiary);
   color: #f5f5f5;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .navbar .btn .text a {
-  color: var(--color-tertiary);;
+  color: var(--text-primary);;
   text-decoration: none;
   transition: color 0.3s ease;
 }
