@@ -1,0 +1,154 @@
+.role-selection-container {
+    min-height: 100vh;
+    background: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .role-cards-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+  }
+  
+  .role-card {
+    flex: 1;
+    background: var(--color-primary);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .role-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  }
+  
+  .role-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+  }
+  
+  .user-card::before {
+    background: linear-gradient(90deg, #4285F4, #34A853);
+  }
+  
+  .freelancer-card::before {
+    background: linear-gradient(90deg, #FBBC05, #EA4335);
+  }
+  
+  .icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  
+  .user-icon-container {
+    background: rgba(66, 133, 244, 0.1);
+  }
+  
+  .freelancer-icon-container {
+    background: rgba(251, 188, 5, 0.1);
+  }
+  
+  .role-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .role-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-primary);
+  }
+  
+  .role-description {
+    color:var(--text-secondary) ;
+    text-align: center;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    color:var(--text-muted);
+  }
+  
+  .feature-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .user-dot {
+    background: #4285F4;
+  }
+  
+  .freelancer-dot {
+    background: #FBBC05;
+  }
+  
+  @media (max-width: 768px) {
+    .role-cards-container {
+      flex-direction: column;
+    }
+  
+    .role-card {
+      margin-bottom: 1rem;
+    }
+  }
+  
+  .cta-button {
+    display: inline-block;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .user-cta {
+    background: #4285F4;
+    color: white;
+  }
+  
+  .freelancer-cta {
+    background: #FBBC05;
+    color: white;
+  }
+  
+  .cta-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }

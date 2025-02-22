@@ -1,0 +1,16 @@
+.post-job-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+  
+  .budget-fields {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .budget-range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
