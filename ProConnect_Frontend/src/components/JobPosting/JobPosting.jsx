@@ -1,47 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
-import JobPostingForm from "./JobPostingForm";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./JobPosting.css";
+import {Button} from "@mui/material";
 
 const JobPosting = () => {
-  const [showForm, setShowForm] = useState(false);
-  const formRef = useRef(null);
+  const navigate = useNavigate();
 
-  const toggleForm = () => {
-    setShowForm(!showForm);
+  const handleUserSelection = () => {
+    navigate('/JobPostingForm');
   };
-
-  const handleFormSubmit = (formData) => {
-    console.log(formData);
-    setShowForm(false);
-  };
-
-  const handleClickOutside = (event) => {
-    if (formRef.current && !formRef.current.contains(event.target)) {
-      setShowForm(false);
-    }
-  };
-
-  useEffect(() => {
-    if (showForm) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showForm]);
 
   return (
       <div className="page-container">
-        <button className="floating-button" onClick={toggleForm}>
-          New Request
-        </button>
-        {showForm && (
-            <div ref={formRef}>
-              <JobPostingForm onSubmit={handleFormSubmit} />
-            </div>
-        )}
+        <div className="job-postingform" onClick={handleUserSelection}>
+          <Button className="newReq" >New Request</Button>
+        </div>
       </div>
   );
 };

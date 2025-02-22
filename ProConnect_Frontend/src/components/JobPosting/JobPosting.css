@@ -1,27 +1,37 @@
 .page-container {
-    height: 100vh; /* Full screen height */
+    height: 530px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
 
-.floating-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #64ffda;
-    color: #000;
-    border: none;
-    border-radius: 50%;
-    width: 100px;
-    height: 60px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+.job-postingform {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
-.floating-button:hover {
-    background-color: #52e0c4;
+.newReq {
+    background-color: var(--color-tertiary);;
+    color: #000;
+    border: none;
+    border-radius: 5px; /* Set the border radius */
+    padding: 10px 20px; /* Set the padding */
+    width: 100px;
+    font-size: 16px; /* Set the font size */
+    font-weight: bold; /* Set the font weight */
+    cursor: pointer; /* Change the cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Add a transition effect */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow */
+}
+
+.newReq:hover {
+    background-color: var(--color-tertiary);; /* Change the background color on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.newReq:active {
+    transform: scale(0.95); /* Slightly shrink the button when clicked */
 }

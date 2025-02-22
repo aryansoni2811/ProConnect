@@ -1,109 +1,92 @@
 .form-container {
-    max-width: 450px;
-    max-height: 550px;
-    margin: 0 auto;
-    padding: 25px;
-    background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    color: #64ffda;
-    font-family: 'Poppins', sans-serif;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    overflow-y: auto;
-    animation: fadeIn 0.4s ease-in-out;
-    scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
-}
-
-.form-container::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Opera */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translate(-50%, -55%); }
-    to { opacity: 1; transform: translate(-50%, -50%); }
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: var(--color-primary);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h2 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #64ffda;
-    font-size: 26px;
-    font-weight: bold;
+    color: var(--text-primary);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
 }
 
-.form-container form {
+form {
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
 }
 
-.form-container input,
-.form-container textarea,
-.form-container select,
-.form-container button {
-    margin-bottom: 15px;
-    padding: 15px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background-color: #222;
-    color: #ccd6f6;
-    font-size: 16px;
-    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-    transition: all 0.3s ease;
+input, textarea, select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--input-bg);
+    color: var(--text-primary);
+    transition: border-color 0.2s ease-in-out;
 }
 
-.form-container input:focus,
-.form-container textarea:focus,
-.form-container select:focus {
-    border-color: #64ffda;
-    box-shadow: 0 0 8px rgba(100, 255, 218, 0.7);
+input:focus, textarea:focus, select:focus {
     outline: none;
+    border-color: var(--focus-color);
+    box-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
 }
 
-.form-container .budget-range {
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.budget-range {
     display: flex;
     gap: 1rem;
 }
 
-.form-container button {
-    border-color: #64ffda;
+.budget-range input {
+    flex: 1;
+}
+
+.select-margin {
+    margin-top: 0.5rem;
+}
+
+button {
+    background-color: var(--color-tertiary);
     color: white;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all ease-in-out 0.3s;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.form-container button:hover {
-    background: #52e0c4;
-    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.5);
-}
 
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-}
-
-.basic-multi-select {
-    background-color: #171717;
-    color: #ccd6f6;
-    border-radius: 10px;
-    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
-}
-
-/* Responsive Design */
-@media (max-width: 500px) {
+@media (max-width: 640px) {
     .form-container {
-        max-width: 90%;
-        max-height: 80%;
+        padding: 1.5rem;
+    }
+    .budget-range {
+        flex-direction: column;
     }
 }
 
-/* JobPostingForm.css */
-.select-margin {
-    margin-bottom: 15px;
+select {
+    color: #ccd6f6; /* Change this to your desired text color */
+    background-color: #171717; /* Optional: change the background color */
+    border: 1px solid var(--border-color); /* Optional: change the border color */
+    border-radius: 8px; /* Optional: change the border radius */
+    padding: 0.8rem; /* Optional: change the padding */
+    font-size: 1rem; /* Optional: change the font size */
+}
+
+select option {
+    color: white; /* Change this to your desired text color for options */
+    background-color:#171717; /* Optional: change the background color for options */
 }

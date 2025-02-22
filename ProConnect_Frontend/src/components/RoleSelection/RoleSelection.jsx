@@ -6,7 +6,7 @@ const RoleSelection = () => {
   const navigate = useNavigate();
 
   const handleUserSelection = () => {
-    navigate('/user-dashboard');
+    navigate('/post-job');
   };
 
   const handleFreelancerSelection = () => {
