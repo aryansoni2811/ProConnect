@@ -1,16 +1,27 @@
-.post-job-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-  
-  .budget-fields {
+.page-container {
+    height: 100vh; /* Full screen height */
     display: flex;
-    gap: 1rem;
-  }
-  
-  .budget-range {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #64ffda;
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    width: 100px;
+    height: 60px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.floating-button:hover {
+    background-color: #52e0c4;
+}

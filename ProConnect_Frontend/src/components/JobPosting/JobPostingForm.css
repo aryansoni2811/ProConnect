@@ -1,0 +1,109 @@
+.form-container {
+    max-width: 450px;
+    max-height: 550px;
+    margin: 0 auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #1e1e1e, #2b2b2b);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    color: #64ffda;
+    font-family: 'Poppins', sans-serif;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    overflow-y: auto;
+    animation: fadeIn 0.4s ease-in-out;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.form-container::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -55%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #64ffda;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container input,
+.form-container textarea,
+.form-container select,
+.form-container button {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background-color: #222;
+    color: #ccd6f6;
+    font-size: 16px;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+    transition: all 0.3s ease;
+}
+
+.form-container input:focus,
+.form-container textarea:focus,
+.form-container select:focus {
+    border-color: #64ffda;
+    box-shadow: 0 0 8px rgba(100, 255, 218, 0.7);
+    outline: none;
+}
+
+.form-container .budget-range {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-container button {
+    border-color: #64ffda;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.form-container button:hover {
+    background: #52e0c4;
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.5);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.basic-multi-select {
+    background-color: #171717;
+    color: #ccd6f6;
+    border-radius: 10px;
+    box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+    .form-container {
+        max-width: 90%;
+        max-height: 80%;
+    }
+}
+
+/* JobPostingForm.css */
+.select-margin {
+    margin-bottom: 15px;
+}
