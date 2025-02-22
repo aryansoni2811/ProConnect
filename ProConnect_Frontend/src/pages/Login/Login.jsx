@@ -15,6 +15,10 @@ const Login = () => {
     });
   };
 
+  const handleLogin = () => {
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('Login attempt:', formData);
@@ -65,7 +69,7 @@ const Login = () => {
             Don't have an account? 
           </p>
           
-          <button class="signin">
+          <button class="signin" onClick={handleLogin}>
             <svg
               viewBox="0 0 256 262"
               preserveAspectRatio="xMidYMid"
