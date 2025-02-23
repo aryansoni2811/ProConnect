@@ -14,13 +14,12 @@ const JobPosting = () => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
             setUserDetails(user);
-            fetchJobs(user.name); // Fetch jobs based on client name
+            fetchJobs(user.name);
         } else {
             navigate("/UserDetailsForm");
         }
     }, [navigate]);
 
-    // Function to fetch jobs by client name
     const fetchJobs = async (clientName) => {
         try {
             const response = await fetch(`http://localhost:8080/api/jobs/client/John%20Smith`);
@@ -44,30 +43,23 @@ const JobPosting = () => {
     return (
         <div className="container">
             <div className="newReq-container">
+                <div className="user-info">
+                    {userDetails ? (
+                        <>
+                            <h2>Welcome, Tirth</h2>
+                            <p><strong>Company:</strong> {userDetails.company}</p>
+                            <p><strong>Email:</strong> bhadanitirth@gmail.com</p>
+                        </>
+                    ) : (
+                        <p>Loading user details...</p>
+                    )}
+                </div>
                 <h1 className="Job-title">Job Listings</h1>
                 <button className="newReq" onClick={handleUserSelection}>
                     New Request
                 </button>
             </div>
 
-            {/* Display User Details */}
-            <div className="user-info">
-                {userDetails ? (
-                    <>
-                        <h2>Welcome, {userDetails.name}</h2>
-                        <p>
-                            <strong>Company:</strong> {userDetails.company}
-                        </p>
-                        <p>
-                            <strong>Email:</strong> {userDetails.email}
-                        </p>
-                    </>
-                ) : (
-                    <p>Loading user details...</p>
-                )}
-            </div>
-
-            {/* Job List */}
             <div className="job-list">
                 {loading ? (
                     <p>Loading job listings...</p>
@@ -76,26 +68,35 @@ const JobPosting = () => {
                 ) : jobData.length > 0 ? (
                     jobData.map((job, index) => (
                         <div key={index} className="job-card">
-                            <h2>{job.title}</h2>
-                            <p>
-                                <strong>Category:</strong> {job.category}
-                            </p>
-                            <p>
-                                <strong>Description:</strong> {job.description}
-                            </p>
-                            <p>
-                                <strong>Budget:</strong> ${job.budgetMin} - ${job.budgetMax}
-                            </p>
-                            <p>
-                                <strong>Deadline:</strong> {job.deadline}
-                            </p>
-                            <p>
-                                <strong>Client:</strong> {job.clientName} ({job.experience})
-                            </p>
-                            <p>
-                                <strong>Location:</strong> {job.location}
-                            </p>
-                            <button className="apply-btn">Accept Now</button>
+                            <div className="card-inner">
+                                <div className="card-front">
+                                    <div className="job-card-header">
+                                        <h2 className="job-title">{job.title}</h2>
+                                        <span className="job-category">{job.category}</span>
+                                    </div>
+                                    <div className="job-details">
+                                        <p className="job-description">{job.description}</p>
+                                        <div className="job-metadata">
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Budget:</span>
+                                                <span className="metadata-value">${job.budgetMin} - ${job.budgetMax}</span>
+                                            </div>
+                                            <div className="metadata-item">
+                                                <span className="metadata-label">Deadline:</span>
+                                                <span className="metadata-value">{job.deadline}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="card-back">
+                                    <div className="back-content">
+                                        <h2 className="back-title">{job.title}</h2>
+                                        <p className="back-client">Client: {job.clientName} ({job.experience})</p>
+                                        <p><strong>Location:</strong> {job.location}</p>
+                                        <button className="apply-btn">Accept Now</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ))
                 ) : (

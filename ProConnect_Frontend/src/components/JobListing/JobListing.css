@@ -65,6 +65,7 @@
 /* Updated job card styles with flip functionality */
 .job-card {
   height: 650px;
+  width: 350px;
   perspective: 1000px;
   cursor: pointer;
 }

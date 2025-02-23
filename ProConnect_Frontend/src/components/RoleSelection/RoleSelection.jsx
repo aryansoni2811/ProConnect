@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './RoleSelection.css';
@@ -6,6 +6,7 @@ import './RoleSelection.css';
 const RoleSelection = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
 
   useEffect(() => {
@@ -16,16 +17,52 @@ const RoleSelection = () => {
     const userType = params.get('userType');
 
     // You can use these values as needed
-    console.log('User details:', { name, email, userType });
+    // console.log('User details:', { name, email, userType });
   }, [location]);
 
 
-  const handleUserSelection = () => {
-    navigate('/loginclient' );
+  // const handleUserSelection = () => {
+  //   navigate('/post-job' );
+  // };
+  //
+  // const handleFreelancerSelection = () => {
+  //   navigate('/loginfreelancer' );
+  // };
+
+  const handleUserSelection = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/user/client`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+      const data = await response.json();
+      console.log('API Response for jobs:', data);
+      navigate('/post-job' );
+      // setJobData(data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      setError("Failed to load job listings. Please try again later.");
+    } finally {
+      // setLoading(false);
+    }
   };
 
-  const handleFreelancerSelection = () => {
-    navigate('/loginfreelancer' );
+  const handleFreelancerSelection = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/user/freelanser`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+      const data = await response.json();
+      console.log('API Response for jobs:', data);
+      navigate('/loginfreelancer' );
+      // setJobData(data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+      setError("Failed to load job listings. Please try again later.");
+    } finally {
+      // setLoading(false);
+    }
   };
 
   return (

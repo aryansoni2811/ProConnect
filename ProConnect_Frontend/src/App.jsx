@@ -21,11 +21,13 @@ function App() {
   return (
     <Router>
       <div className="app">
+
+        
         <Navbar />
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            
+
             <Route path="/login" element={<LoginClient />} />
             <Route path="/loginfreelancer" element={<LoginFreelancer />} />
             <Route path="/signup" element={<SignUp />} />
