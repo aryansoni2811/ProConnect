@@ -14,15 +14,50 @@ const JobPosting = () => {
         if (storedUser) {
             const user = JSON.parse(storedUser);
             setUserDetails(user);
-            fetchJobs(user.name);
+            fetchJobs(user.name); // Fetch jobs based on client name
         } else {
             navigate("/UserDetailsForm");
         }
     }, [navigate]);
 
+    const handleAcceptNow = async (job) => {
+        try {
+            const response = await fetch('http://localhost:8080/product/v1/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    amount: job.budgetMax * 100, // Convert to cents for Stripe
+                    quantity: 1,
+                    name: job.title, // Use the job title as the product name
+                    currency: 'USD'
+                })
+            });
+    
+            if (!response.ok) {
+                throw new Error('Payment initiation failed');
+            }
+    
+            const data = await response.json();
+            
+            if (data.sessionUrl) {
+                // Redirect to Stripe checkout page
+                window.location.href = data.sessionUrl;
+            } else {
+                throw new Error('No session URL received');
+            }
+        } catch (error) {
+            console.error('Error initiating payment:', error);
+            // Handle error - you might want to show an error message to the user
+            alert('Failed to initiate payment. Please try again.');
+        }
+    };
+
+    // Function to fetch jobs by client name
     const fetchJobs = async (clientName) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/jobs/client/John%20Smith`);
+            const response = await fetch(`http://localhost:8080/api/jobs/client/abcd`);
             if (!response.ok) {
                 throw new Error("Failed to fetch jobs");
             }
@@ -43,23 +78,30 @@ const JobPosting = () => {
     return (
         <div className="container">
             <div className="newReq-container">
-                <div className="user-info">
-                    {userDetails ? (
-                        <>
-                            <h2>Welcome, Tirth</h2>
-                            <p><strong>Company:</strong> {userDetails.company}</p>
-                            <p><strong>Email:</strong> bhadanitirth@gmail.com</p>
-                        </>
-                    ) : (
-                        <p>Loading user details...</p>
-                    )}
-                </div>
                 <h1 className="Job-title">Job Listings</h1>
                 <button className="newReq" onClick={handleUserSelection}>
                     New Request
                 </button>
             </div>
 
+            {/* Display User Details */}
+            <div className="user-info">
+                {userDetails ? (
+                    <>
+                        <h2>Welcome, {userDetails.name}</h2>
+                        <p>
+                            <strong>Company:</strong> {userDetails.company}
+                        </p>
+                        <p>
+                            <strong>Email:</strong> {userDetails.email}
+                        </p>
+                    </>
+                ) : (
+                    <p>Loading user details...</p>
+                )}
+            </div>
+
+            {/* Job List */}
             <div className="job-list">
                 {loading ? (
                     <p>Loading job listings...</p>
@@ -68,38 +110,34 @@ const JobPosting = () => {
                 ) : jobData.length > 0 ? (
                     jobData.map((job, index) => (
                         <div key={index} className="job-card">
-                            <div className="card-inner">
-                                <div className="card-front">
-                                    <div className="job-card-header">
-                                        <h2 className="job-title">{job.title}</h2>
-                                        <span className="job-category">{job.category}</span>
-                                    </div>
-                                    <div className="job-details">
-                                        <p className="job-description">{job.description}</p>
-                                        <div className="job-metadata">
-                                            <div className="metadata-item">
-                                                <span className="metadata-label">Budget:</span>
-                                                <span className="metadata-value">${job.budgetMin} - ${job.budgetMax}</span>
-                                            </div>
-                                            <div className="metadata-item">
-                                                <span className="metadata-label">Deadline:</span>
-                                                <span className="metadata-value">{job.deadline}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card-back">
-                                    <div className="back-content">
-                                        <h2 className="back-title">{job.title}</h2>
-                                        <p className="back-client">Client: {job.clientName} ({job.experience})</p>
-                                        <p><strong>Location:</strong> {job.location}</p>
-                                        <button className="apply-btn">Accept Now</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <h2>{job.title}</h2>
+                            <p>
+                                <strong>Category:</strong> {job.category}
+                            </p>
+                            <p>
+                                <strong>Description:</strong> {job.description}
+                            </p>
+                            <p>
+                                <strong>Budget:</strong> ${job.budgetMin} - ${job.budgetMax}
+                            </p>
+                            <p>
+                                <strong>Deadline:</strong> {job.deadline}
+                            </p>
+                            <p>
+                                <strong>Client:</strong> {job.clientName} ({job.experience})
+                            </p>
+                            <p>
+                                <strong>Location:</strong> {job.location}
+                            </p>
+                            <button 
+                                className="apply-btn" 
+                                onClick={() => handleAcceptNow(job)}
+                            >
+                                Accept Now
+                            </button>
                         </div>
                     ))
-                ) : (
+                ) : (  
                     <p>No job listings found.</p>
                 )}
             </div>
