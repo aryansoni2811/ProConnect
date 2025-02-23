@@ -8,9 +8,6 @@ const LoginClient = () => {
     password: ''
   });
 
-  // Set fixed role for client
-  const role = '0';  // Client role is 0
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -19,9 +16,8 @@ const LoginClient = () => {
   };
 
   const handleLogin = () => {
-    // Pass role parameter in both state and URL
-    const state = encodeURIComponent(JSON.stringify({ role }));
-    window.location.href = `http://localhost:8080/oauth2/authorization/google?role=${role}&state=${state}`;
+    // Simplified URL without role parameter
+    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
   };
 
   const handleSubmit = (e) => {
@@ -33,7 +29,7 @@ const LoginClient = () => {
     <div className="login-container">
       <div className="form-card1">
         <form className="form" onSubmit={handleSubmit}>
-          <h2 className="form-heading">Welcome Back Client</h2>
+          <h2 className="form-heading">Welcome Back</h2>
 
           <div className="form-field">
             <input
