@@ -34,5 +34,11 @@ public class JobPostingController {
         List<JobPosting> jobs = jobPostingService.getJobPostingsByClientName(clientName);
         return ResponseEntity.ok(jobs);
     }
+
+     @GetMapping("/client/{clientName}/check")
+    public JobPosting checkJobsByClientName(@PathVariable String clientName) {
+                return (JobPosting) jpr.findByClientName(clientName);
+    	   
+    }
 }
 
