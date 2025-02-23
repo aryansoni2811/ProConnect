@@ -30,39 +30,11 @@ const RoleSelection = () => {
   // };
 
   const handleUserSelection = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/user/client`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch jobs");
-      }
-      const data = await response.json();
-      console.log('API Response for jobs:', data);
-      navigate('/post-job' );
-      // setJobData(data);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-      setError("Failed to load job listings. Please try again later.");
-    } finally {
-      // setLoading(false);
-    }
+    navigate('/post-job')
   };
 
   const handleFreelancerSelection = async () => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/user/freelanser`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch jobs");
-      }
-      const data = await response.json();
-      console.log('API Response for jobs:', data);
-      navigate('/loginfreelancer' );
-      // setJobData(data);
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-      setError("Failed to load job listings. Please try again later.");
-    } finally {
-      // setLoading(false);
-    }
+    navigate('/freelanceronboarding')
   };
 
   return (
