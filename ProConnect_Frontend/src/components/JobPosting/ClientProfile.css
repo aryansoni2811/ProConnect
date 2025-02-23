@@ -1,0 +1,164 @@
+/* General Container */
+.full-profile-container {
+    background-color: var(--color-secondary);
+}
+.profile-container {
+    background-color: #1a1a2e;
+    color: white;
+    width: 80%;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Name */
+.profile-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Grid Layout */
+.profile-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* General Card Styling */
+.profile-card-Professional,
+.profile-card-Location,
+.profile-card-Education,
+.profile-card-About,
+.profile-card-Portfolio,
+.profile-card-Skills,
+.project-card-Find {
+    padding: 15px;
+    border-radius: 10px;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.profile-card-Professional:hover,
+.profile-card-Location:hover,
+.profile-card-Education:hover,
+.profile-card-About:hover,
+.profile-card-Portfolio:hover,
+.profile-card-Skills:hover,
+.project-card-Find:hover {
+    transform: translateY(-5px);
+}
+
+/* Individual Card Styling */
+.profile-card-Professional {
+    background-color: #0f3460;
+    border-left: 4px solid #64ffda;
+}
+
+.project-card-Find {
+    background-color: #14532d;
+    text-align: center;
+    border-left: 4px solid #1db954;
+}
+
+.profile-card-Location {
+    background-color: #0a1931;
+    border-left: 4px solid #ff9f43;
+}
+
+.profile-card-Education {
+    background-color: #091c29;
+    border-left: 4px solid #ff4757;
+}
+
+.profile-card-About {
+    background-color: #0b132b;
+    border-left: 4px solid #eccc68;
+}
+
+.profile-card-Portfolio {
+    background-color: #23272a;
+    border-left: 4px solid #ff6b81;
+}
+
+.profile-card-Skills {
+    background-color: #192a56;
+    border-left: 4px solid #3498db;
+}
+
+/* Card Headers */
+.profile-card-Professional h2,
+.project-card-Find h2,
+.profile-card-Location h2,
+.profile-card-Education h2,
+.profile-card-About h2,
+.profile-card-Portfolio h2,
+.profile-card-Skills h2 {
+    font-size: 18px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* Profile Info */
+.profile-card-Professional p,
+.profile-card-Location p,
+.profile-card-Education p,
+.profile-card-About p,
+.profile-card-Portfolio p,
+.profile-card-Skills span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #d3d3d3;
+}
+
+/* Icons Styling */
+.profile-card-Professional svg,
+.profile-card-Location svg,
+.profile-card-Education svg,
+.profile-card-Portfolio svg {
+    color: #64ffda;
+}
+
+/* Button Styling */
+.project-card-Find button {
+    margin-top: 10px;
+    width: 100%;
+    font-weight: bold;
+}
+
+/* Skills Section */
+.skill-tag {
+    display: inline-block;
+    background: #64ffda;
+    color: black;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Portfolio Link */
+.profile-card-Portfolio a {
+    color: #64ffda;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-card-Portfolio a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+}

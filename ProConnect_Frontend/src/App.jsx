@@ -13,6 +13,9 @@ import RoleSelection from './components/RoleSelection/RoleSelection'
 import FreelancerDashboard from './components/FreelancerDashboard/FreelancerDashboard';
 import FreelancerOnboarding from './components/FreelancerOnboarding/FreelancerOnboarding';
 import './App.css';
+import ClientForm from "./components/JobPosting/ClientForm.jsx";
+import ClientProfile from "./components/JobPosting/ClientProfile.jsx";
+import UserDetailsForm from "./components/JobPosting/UserDetailsForm.jsx";
 
 function App() {
   return (
@@ -32,7 +35,9 @@ function App() {
             <Route path="/JobPostingForm" element={<JobPostingForm />} />
             <Route path="/freelancerdashboard" element={<FreelancerDashboard />} />
             <Route path="/freelanceronboarding" element={<FreelancerOnboarding />} />
-
+            <Route path="/ClientForm" element={<ClientForm />} />
+            <Route path="/ClientProfile" element={<ClientProfile />} />
+            <Route path="/UserDetailsForm" element={<UserDetailsForm />} />
           </Routes>
         </main>
         <Footer />

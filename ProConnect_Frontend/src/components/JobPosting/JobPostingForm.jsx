@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import Select from "react-select";
 import "./JobPostingForm.css";
 
 const JobPostingForm = ({ onSubmit }) => {
+    const navigate = useNavigate(); // ✅ Initialize navigate
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -17,69 +20,95 @@ const JobPostingForm = ({ onSubmit }) => {
         location: "",
     });
 
-    const categories = [
-        "Web Development",
-        "Mobile Development",
-        "Data Science",
-        "Machine Learning",
-        "DevOps",
-        "UI/UX Design",
-        "Project Management",
-        "Content Writing",
-        "Digital Marketing",
-        "SEO",
-    ];
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
-    const skillsOptions = [
-        { value: "React", label: "React" },
-        { value: "JavaScript", label: "JavaScript" },
-        { value: "CSS", label: "CSS" },
-        { value: "TypeScript", label: "TypeScript" },
-        { value: "HTML", label: "HTML" },
-        { value: "Node.js", label: "Node.js" },
-        { value: "Express.js", label: "Express.js" },
-        { value: "MongoDB", label: "MongoDB" },
-        { value: "SQL", label: "SQL" },
-        { value: "PostgreSQL", label: "PostgreSQL" },
-        { value: "MySQL", label: "MySQL" },
-        { value: "Python", label: "Python" },
-        { value: "Django", label: "Django" },
-        { value: "Flask", label: "Flask" },
-        { value: "Java", label: "Java" },
-        { value: "Spring Boot", label: "Spring Boot" },
-        { value: "Kotlin", label: "Kotlin" },
-        { value: "Swift", label: "Swift" },
-        { value: "Android Development", label: "Android Development" },
-        { value: "iOS Development", label: "iOS Development" },
-        { value: "C++", label: "C++" },
-        { value: "C#", label: "C#" },
-        { value: "PHP", label: "PHP" },
-        { value: "Laravel", label: "Laravel" },
-        { value: "GraphQL", label: "GraphQL" },
-        { value: "REST API", label: "REST API" },
-        { value: "Redux", label: "Redux" },
-        { value: "Next.js", label: "Next.js" },
-        { value: "Vue.js", label: "Vue.js" },
-        { value: "Angular", label: "Angular" },
-    ];
+    const createJobPosting = async (jobData) => {
+        try {
+            const response = await fetch("http://localhost:8080/api/jobs/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(jobData),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to create job posting");
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error creating job posting:", error);
+            throw error;
+        }
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+
+        if (name === "deadline") {
+            const dateParts = value.split("-");
+
+            // Check if the input is in "dd-mm-yyyy" format
+            if (dateParts.length === 3 && dateParts[0].length === 2 && dateParts[1].length === 2 && dateParts[2].length === 4) {
+                const [day, month, year] = dateParts;
+                const formattedDate = `${year}-${month}-${day}`; // Convert to YYYY-MM-DD
+                setFormData({ ...formData, [name]: formattedDate });
+            } else {
+                setFormData({ ...formData, [name]: value }); // Store as it is if not in expected format
+            }
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
     const handleSkillsChange = (selectedOptions) => {
-        setFormData({ ...formData, skills: selectedOptions });
+        setFormData({ ...formData, skills: selectedOptions.map((option) => option.value) });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        const { budgetMin, budgetMax } = formData;
-        if (budgetMin <= 0 || budgetMax <= 0) {
-            alert("Budget values must be positive numbers.");
-            return;
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        try {
+            const { budgetMin, budgetMax } = formData;
+            if (budgetMin <= 0 || budgetMax <= 0) {
+                alert("Budget values must be positive numbers.");
+                return;
+            }
+
+            await createJobPosting(formData);
+            setSuccess("Job posting created successfully!");
+
+            // ✅ Navigate to success page after successful submission
+            setTimeout(() => {
+                navigate("/post-job");
+            }, 2000); // Optional delay for user to see success message
+
+            // Reset form
+            setFormData({
+                title: "",
+                description: "",
+                category: "",
+                budgetMin: "",
+                budgetMax: "",
+                skills: [],
+                deadline: "",
+                postedDate: new Date().toISOString().split("T")[0],
+                clientName: "",
+                experience: "",
+                location: "",
+            });
+        } catch (err) {
+            setError("Failed to create job posting. Please try again.");
+        } finally {
+            setLoading(false);
         }
-        onSubmit(formData);
     };
 
     const customStyles = {
@@ -113,44 +142,49 @@ const JobPostingForm = ({ onSubmit }) => {
             },
         }),
     };
-
     return (
         <div className="clientForm">
-        <div className="form-container">
-            <h2>Project Request Form</h2>
-            <form onSubmit={handleSubmit}>
-                <input type="text" name="title" placeholder="Project Title" onChange={handleChange} required />
-                <textarea name="description" placeholder="Project Description" onChange={handleChange} required />
-                <select name="category" onChange={handleChange} required>
-                    <option value="">Select Category</option>
-                    {categories.map((category) => (
-                        <option key={category} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-                <div className="budget-range">
-                    <input type="number" name="budgetMin" placeholder="Minimum Budget" onChange={handleChange} required />
-                    <input type="number" name="budgetMax" placeholder="Maximum Budget" onChange={handleChange} required />
-                </div>
+            <div className="form-container">
+                <h2>Project Request Form</h2>
+                {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">{success}</p>}
+                <form onSubmit={handleSubmit}>
+                    <input type="text" name="title" placeholder="Project Title" value={formData.title} onChange={handleChange} required />
+                    <textarea name="description" placeholder="Project Description" value={formData.description} onChange={handleChange} required />
+                    <select name="category" value={formData.category} onChange={handleChange} required>
+                        <option value="">Select Category</option>
+                        {["Web Development", "Mobile Development", "Data Science", "Machine Learning", "DevOps", "UI/UX Design"].map((category) => (
+                            <option key={category} value={category}>
+                                {category}
+                            </option>
+                        ))}
+                    </select>
+                    <div className="budget-range">
+                        <input type="number" name="budgetMin" placeholder="Minimum Budget" value={formData.budgetMin} onChange={handleChange} required />
+                        <input type="number" name="budgetMax" placeholder="Maximum Budget" value={formData.budgetMax} onChange={handleChange} required />
+                    </div>
 
-                <Select
-                    isMulti
-                    name="skills"
-                    options={skillsOptions}
-                    className="basic-multi-select select-margin"
-                    classNamePrefix="select"
-                    styles={customStyles}
-                    onChange={handleSkillsChange}
-                />
+                    <Select
+                        isMulti
+                        name="skills"
+                        options={[
+                            { value: "React", label: "React" },
+                            { value: "Node.js", label: "Node.js" },
+                            { value: "Python", label: "Python" },
+                        ]}
+                        className="basic-multi-select select-margin"
+                        classNamePrefix="select"
+                        styles={customStyles}
+                        onChange={handleSkillsChange}
+                    />
 
-                <input type="date" name="deadline" placeholder="Deadline" onChange={handleChange} onFocus={(e) => e.target.showPicker()} required />
-                <input type="text" name="clientName" placeholder="Client Name" onChange={handleChange} required />
-                <input type="text" name="experience" placeholder="Experience (e.g., 2-5 years)" onChange={handleChange} required />
-                <input type="text" name="location" placeholder="Location" onChange={handleChange} required />
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+                    <input type="date" name="deadline" value={formData.deadline} onChange={handleChange} required />
+                    <input type="text" name="clientName" placeholder="Client Name" value={formData.clientName} onChange={handleChange} required />
+                    <input type="text" name="experience" placeholder="Experience (e.g., 2-5 years)" value={formData.experience} onChange={handleChange} required />
+                    <input type="text" name="location" placeholder="Location" value={formData.location} onChange={handleChange} required />
+                    <button type="submit" disabled={loading}>{loading ? "Submitting..." : "Submit"}</button>
+                </form>
+            </div>
         </div>
     );
 };
