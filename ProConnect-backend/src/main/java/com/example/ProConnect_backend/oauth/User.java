@@ -23,6 +23,7 @@ public class User{
     private String name;
     private String picture;
     private String googleId;
+    private String role;
 	public Long getId() {
 		return id;
 	}
@@ -53,12 +54,19 @@ public class User{
 	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
-	User( String email, String name, String picture, String googleId) {
+	User( String email, String name, String picture, String googleId,String role) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.picture = picture;
 		this.googleId = googleId;
+		this.role=role;
+	}
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
 	}
     
     

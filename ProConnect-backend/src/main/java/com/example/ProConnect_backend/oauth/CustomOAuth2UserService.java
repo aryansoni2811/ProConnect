@@ -37,7 +37,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             
             if (user == null) {
                 logger.info("Creating new user for email: {}", email);
-                user = new User(email, name, picture, googleId);
+                user = new User(email, name, picture, googleId,null);
             } else {
                 logger.info("Updating existing user for email: {}", email);
                 user.setName(name);
