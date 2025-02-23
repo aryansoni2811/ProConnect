@@ -5,6 +5,7 @@ const JobListing = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [freelancerId, setFreelancerId] = useState(1);
   const [searchParams, setSearchParams] = useState({
     keyword: '',
     category: '',
@@ -65,6 +66,44 @@ const JobListing = () => {
     }
   };
 
+
+  const handleApply = async (job) => {
+    // First confirm with the user
+    const confirmApplication = window.confirm(`Are you sure you want to apply for ${job.title}?`);
+    console.log(job.id);
+    if (!confirmApplication) return;
+  
+    try {
+      const applicationData = {
+        jobPosting: {
+          id: job.id  // Fixed: Using job.id instead of response.id
+        },
+        freelancer: {
+          id: freelancerId  // Using the freelancerId from state
+        },
+        applicationDate: new Date().toISOString().split('T')[0],
+        status: "PENDING"
+      };
+  
+      const response = await fetch('http://localhost:8080/api/applications/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(applicationData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to submit application');
+      }
+  
+      // Handle successful application
+      alert('Application submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      alert('Failed to submit application. Please try again.');
+    }
+  };
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -129,6 +168,8 @@ const JobListing = () => {
   if (error) {
     return <div className="error">{error}</div>;
   }
+
+  
 
   return (
     <div className="job-listing-page">
@@ -244,7 +285,7 @@ const JobListing = () => {
                     <div className="back-content">
                       <h3 className="back-title">{job.title}</h3>
                       <p className="back-client">{job.clientName}</p>
-                      <button className="apply-btn">Apply Now</button>
+                      <button className="apply-btn" onClick={handleApply}>Apply Now</button>
                     </div>
                   </div>
                 </div>
