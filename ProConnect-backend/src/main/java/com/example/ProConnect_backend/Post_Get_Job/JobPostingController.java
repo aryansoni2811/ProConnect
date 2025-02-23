@@ -3,6 +3,7 @@ package com.example.ProConnect_backend.Post_Get_Job;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.batch.BatchProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,4 +47,12 @@ public class JobPostingController {
         return (JobPosting) jpr.findByClientName(clientName);
 
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<JobPosting>> getallClient()
+    {
+        List<JobPosting> alljobs=jpr.findAll();
+        return ResponseEntity.ok(alljobs);
+    }
+
 }
