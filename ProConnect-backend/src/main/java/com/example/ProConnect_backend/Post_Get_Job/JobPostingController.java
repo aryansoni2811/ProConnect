@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class JobPostingController {
 
     private final JobPostingService jobPostingService;
+    private final JobPostingRepository jpr;
+
+    public JobPostingController(JobPostingService jobPostingService, JobPostingRepository jpr) {
+        this.jobPostingService = jobPostingService;
+        this.jpr = jpr;
+    }
 
     @Autowired
-    public JobPostingController(JobPostingService jobPostingService) {
-        this.jobPostingService = jobPostingService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<JobPosting> createJobPosting(@RequestBody JobPosting jobPosting) {
