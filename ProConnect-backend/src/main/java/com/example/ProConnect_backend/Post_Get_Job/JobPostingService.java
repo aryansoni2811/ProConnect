@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class JobPostingService {
-    
+
     private final JobPostingRepository jobPostingRepository;
 
     @Autowired
@@ -23,4 +23,3 @@ public class JobPostingService {
         return jobPostingRepository.findByClientName(clientName);
     }
 }
-

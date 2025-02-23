@@ -19,12 +19,13 @@ public class JobPostingController {
     private final JobPostingService jobPostingService;
     private final JobPostingRepository jpr;
 
-    public JobPostingController(JobPostingService jobPostingService, JobPostingRepository jpr) {
+    @Autowired
+    JobPostingController(JobPostingService jobPostingService, JobPostingRepository jpr) {
+        super();
         this.jobPostingService = jobPostingService;
         this.jpr = jpr;
     }
 
-    @Autowired
 
     @PostMapping("/create")
     public ResponseEntity<JobPosting> createJobPosting(@RequestBody JobPosting jobPosting) {
@@ -32,16 +33,17 @@ public class JobPostingController {
         return ResponseEntity.ok(createdJob);
     }
 
+
+
+
     @GetMapping("/client/{clientName}")
     public ResponseEntity<List<JobPosting>> getJobsByClientName(@PathVariable String clientName) {
         List<JobPosting> jobs = jobPostingService.getJobPostingsByClientName(clientName);
         return ResponseEntity.ok(jobs);
     }
-
-     @GetMapping("/client/{clientName}/check")
+    @GetMapping("/client/{clientName}/check")
     public JobPosting checkJobsByClientName(@PathVariable String clientName) {
-                return (JobPosting) jpr.findByClientName(clientName);
-    	   
+        return (JobPosting) jpr.findByClientName(clientName);
+
     }
 }
-

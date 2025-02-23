@@ -13,17 +13,17 @@ public class JobPosting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String title;
     private String description;
-    
+
     private String category;
     private double budgetMin;
     private double budgetMax;
-    
+
     @ElementCollection
     private List<String> skills;
-    
+
     private String deadline;
     private String postedDate;
     private String clientName;
@@ -131,4 +131,3 @@ public class JobPosting {
         this.location = location;
     }
 }
-
