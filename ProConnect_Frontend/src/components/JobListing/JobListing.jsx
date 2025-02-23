@@ -2,49 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './JobListing.css';
 
 const JobListing = () => {
-  const initialJobs = [
-    {
-      id: 1,
-      title: 'Frontend Developer Needed',
-      description: 'Looking for a skilled frontend developer with experience in modern web technologies and frameworks. Must be proficient in creating responsive and interactive user interfaces.',
-      category: 'Web Development',
-      budget: { minimum: 1000, maximum: 2000 },
-      skills: ['React', 'JavaScript', 'CSS', 'TypeScript'],
-      deadline: '2024-03-30',
-      postedDate: '2024-02-21',
-      clientName: 'Tech Corp',
-      experience: '2-5 years',
-      location: 'Remote'
-    },
-    {
-      id: 2,
-      title: 'UI/UX Designer',
-      description: 'Seeking a creative UI/UX designer to help design intuitive and beautiful user interfaces for our web and mobile applications.',
-      category: 'Design',
-      budget: { minimum: 2000, maximum: 3500 },
-      skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research'],
-      deadline: '2024-04-15',
-      postedDate: '2024-02-22',
-      clientName: 'Design Studio',
-      experience: '3+ years',
-      location: 'Hybrid'
-    },
-    {
-      id: 3,
-      title: 'Mobile App Developer',
-      description: 'Experienced mobile developer needed for iOS and Android app development using React Native.',
-      category: 'Mobile Development',
-      budget: { minimum: 3000, maximum: 5000 },
-      skills: ['React Native', 'iOS', 'Android', 'Mobile Design'],
-      deadline: '2024-03-25',
-      postedDate: '2024-02-20',
-      clientName: 'Mobile Tech Inc',
-      experience: '4+ years',
-      location: 'Remote'
-    }
-  ];
-
-  const [jobs, setJobs] = useState(initialJobs);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useState({
     keyword: '',
     category: '',
@@ -52,7 +12,6 @@ const JobListing = () => {
     skills: []
   });
 
-  // Rest of the states and handlers remain the same...
   const categories = [
     'Web Development',
     'Mobile Development',
@@ -68,6 +27,83 @@ const JobListing = () => {
     { label: '$3001+', min: 3001, max: Infinity }
   ];
 
+  // Fetch jobs from the backend API
+  const fetchJobs = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:8080/api/jobs/all');
+      if (!response.ok) {
+        throw new Error('Failed to fetch jobs');
+      }
+      const data = await response.json();
+      
+      // Transform the data to match the frontend structure
+      const transformedJobs = data.map(job => ({
+        id: job.id,
+        title: job.title,
+        description: job.description,
+        category: job.category,
+        budget: {
+          minimum: job.budgetMin,
+          maximum: job.budgetMax
+        },
+        skills: job.skills,
+        deadline: job.deadline,
+        postedDate: job.postedDate,
+        clientName: job.clientName,
+        experience: job.experience,
+        location: job.location
+      }));
+
+      setJobs(transformedJobs);
+      setError(null);
+    } catch (err) {
+      setError('Failed to load jobs. Please try again later.');
+      console.error('Error fetching jobs:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
+
+  // Filter jobs based on search parameters
+  useEffect(() => {
+    if (!loading && !error) {
+      let filteredJobs = [...jobs];
+
+      if (searchParams.keyword) {
+        const keyword = searchParams.keyword.toLowerCase();
+        filteredJobs = filteredJobs.filter(job => 
+          job.title.toLowerCase().includes(keyword) ||
+          job.description.toLowerCase().includes(keyword) ||
+          job.skills.some(skill => skill.toLowerCase().includes(keyword))
+        );
+      }
+
+      if (searchParams.category) {
+        filteredJobs = filteredJobs.filter(job => 
+          job.category === searchParams.category
+        );
+      }
+
+      if (searchParams.budget) {
+        const [minStr, maxStr] = searchParams.budget.split('-');
+        const min = parseInt(minStr);
+        const max = maxStr === 'Infinity' ? Infinity : parseInt(maxStr);
+        
+        filteredJobs = filteredJobs.filter(job => 
+          job.budget.minimum >= min && 
+          job.budget.maximum <= max
+        );
+      }
+
+      setJobs(filteredJobs);
+    }
+  }, [searchParams]);
+
   const handleSearch = (e) => {
     const { name, value } = e.target;
     setSearchParams(prevParams => ({
@@ -76,38 +112,6 @@ const JobListing = () => {
     }));
   };
 
-  useEffect(() => {
-    let filteredJobs = [...initialJobs];
-
-    if (searchParams.keyword) {
-      const keyword = searchParams.keyword.toLowerCase();
-      filteredJobs = filteredJobs.filter(job => 
-        job.title.toLowerCase().includes(keyword) ||
-        job.description.toLowerCase().includes(keyword) ||
-        job.skills.some(skill => skill.toLowerCase().includes(keyword))
-      );
-    }
-
-    if (searchParams.category) {
-      filteredJobs = filteredJobs.filter(job => 
-        job.category === searchParams.category
-      );
-    }
-
-    if (searchParams.budget) {
-      const [minStr, maxStr] = searchParams.budget.split('-');
-      const min = parseInt(minStr);
-      const max = maxStr === 'Infinity' ? Infinity : parseInt(maxStr);
-      
-      filteredJobs = filteredJobs.filter(job => 
-        job.budget.minimum >= min && 
-        job.budget.maximum <= max
-      );
-    }
-
-    setJobs(filteredJobs);
-  }, [searchParams]);
-
   const handleClearFilters = () => {
     setSearchParams({
       keyword: '',
@@ -115,7 +119,16 @@ const JobListing = () => {
       budget: '',
       skills: []
     });
+    fetchJobs(); // Reload all jobs when filters are cleared
   };
+
+  if (loading) {
+    return <div className="loading">Loading jobs...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
   return (
     <div className="job-listing-page">
