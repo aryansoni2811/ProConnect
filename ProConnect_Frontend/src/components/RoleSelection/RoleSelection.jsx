@@ -1,16 +1,31 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './RoleSelection.css';
 
 const RoleSelection = () => {
+  const location = useLocation();
   const navigate = useNavigate();
 
+
+  useEffect(() => {
+    // Get URL parameters
+    const params = new URLSearchParams(location.search);
+    const name = params.get('name');
+    const email = params.get('email');
+    const userType = params.get('userType');
+
+    // You can use these values as needed
+    console.log('User details:', { name, email, userType });
+  }, [location]);
+
+
   const handleUserSelection = () => {
-    navigate('/post-job');
+    navigate('/loginclient' );
   };
 
   const handleFreelancerSelection = () => {
-    navigate('/freelancerdashboard');
+    navigate('/loginfreelancer' );
   };
 
   return (

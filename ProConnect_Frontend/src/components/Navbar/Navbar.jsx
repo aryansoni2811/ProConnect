@@ -19,7 +19,7 @@ const Navbar = () => {
                 <LogIn size={40} color="#f0f0f0" />
             </span>
               <span className="text">
-              <Link to="/login">Login</Link>
+              <Link to="/roleselection">Login</Link>
             </span>
           </button>
         </div>

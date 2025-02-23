@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
+import LoginClient from './pages/Login/Loginclient';
+import LoginFreelancer from './pages/Login/Loginfreelancer';
 import SignUp from './pages/SignUp/SignUpForm';
 import JobPosting from './components/JobPosting/JobPosting';
 import JobPostingForm from './components/JobPosting/JobPostingForm';
@@ -21,14 +22,16 @@ function App() {
         <main className="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
+            
+            <Route path="/loginclient" element={<LoginClient />} />
+            <Route path="/loginfreelancer" element={<LoginFreelancer />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/post-job" element={<JobPosting />} />
             <Route path="/jobs" element={<JobListing />} />
             <Route path="/roleselection" element={<RoleSelection />} />
             <Route path="/JobPostingForm" element={<JobPostingForm />} />
             <Route path="/freelancerdashboard" element={<FreelancerDashboard />} />
-            <Route path="/freelancer-onboarding" element={<FreelancerOnboarding />} />
+            <Route path="/freelanceronboarding" element={<FreelancerOnboarding />} />
 
           </Routes>
         </main>

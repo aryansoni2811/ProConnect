@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
 
-const Login = () => {
+const LoginFreelancer = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+
+  // Explicitly set freelancer role
+  const role = '1';  // Freelancer role is 1
 
   const handleChange = (e) => {
     setFormData({
@@ -15,20 +18,27 @@ const Login = () => {
     });
   };
 
-  const handleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login attempt:', formData);
+  const handleLogin = (e) => {
+    e.preventDefault(); // Prevent default button behavior
+    
+    // Create state object with role
+    const stateObj = { role: '1' };
+    const state = encodeURIComponent(JSON.stringify(stateObj));
+    
+    // Build URL with both role and state parameters
+    const authUrl = new URL('http://localhost:8080/oauth2/authorization/google');
+    authUrl.searchParams.append('role', '1');
+    authUrl.searchParams.append('state', state);
+    
+    console.log('Auth URL:', authUrl.toString()); // Debug log
+    window.location.href = authUrl.toString();
   };
 
   return (
     <div className="login-container">
       <div className="form-card1">
-        <form className="form" onSubmit={handleSubmit}>
-          <h2 className="form-heading">Welcome Back</h2>
+        <form className="form">
+          <h2 className="form-heading">Welcome Back Freelancer</h2>
 
           <div className="form-field">
             <input
@@ -55,13 +65,12 @@ const Login = () => {
           </div>
 
           <div className="form-options">
-
             <Link to="/forgot-password" className="forgot-password">
               Forgot Password?
             </Link>
           </div>
 
-          <button type="submit" className="sendMessage-btn">
+          <button type="button" className="sendMessage-btn">
             Login
           </button>
 
@@ -69,7 +78,7 @@ const Login = () => {
             Don't have an account? 
           </p>
           
-          <button class="signin" onClick={handleLogin}>
+          <button type="button" className="signin" onClick={handleLogin}>
             <svg
               viewBox="0 0 256 262"
               preserveAspectRatio="xMidYMid"
@@ -94,11 +103,10 @@ const Login = () => {
             </svg>
             Sign in with Google
           </button>
-
         </form>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginFreelancer;
